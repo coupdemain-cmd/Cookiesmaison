@@ -1,0 +1,334 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Commande Cookies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=DM+Sans:wght@400;500;700&display=swap">
+<style>
+:root{--bg:#FFFFFF;--ink:#1B1B1F;--muted:#6A6A73;--line:#E8E8EC;--soft:#F5F5F7;--caramel:#E9B563;--danger:#C0341F;--good:#1F7A45;
+--fd:'Sora','Helvetica Neue',Arial,sans-serif;--fb:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--fb);-webkit-font-smoothing:antialiased;padding:0 max(16px,env(safe-area-inset-right,0px)) 120px max(16px,env(safe-area-inset-left,0px))}
+.wrap{max-width:1100px;margin:0 auto}
+h1,h2,h3{font-family:var(--fd);margin:0;text-wrap:balance}
+button,input,textarea{font:inherit;color:inherit}button{cursor:pointer}
+:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+[hidden]{display:none!important}
+
+.head{padding:28px 0 20px;display:grid;gap:10px}
+.brand{font-family:var(--fd);font-weight:700;font-size:.95rem}
+.head h1{font-size:clamp(2.4rem,9vw,4.2rem);font-weight:800;line-height:1;letter-spacing:-.04em}
+.head p{margin:0;color:var(--muted);max-width:44ch}
+
+/* Box : suivi de remplissage */
+.trk{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);box-shadow:0 0 0 100vmax var(--bg);clip-path:inset(0 -100vmax);border-bottom:1px solid var(--line);padding:12px 0;display:grid;gap:8px}
+.trow{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.boxes{display:flex;gap:6px;overflow-x:auto;min-width:0;scrollbar-width:none}
+.cb{border:0;color:inherit;font-family:inherit;cursor:pointer;flex:none;display:inline-flex;align-items:center;gap:7px;background:var(--soft);border-radius:999px;padding:5px 11px 5px 9px;font-size:.78rem;font-weight:700;white-space:nowrap}
+.cb i{display:flex;font-style:normal}
+.cb s{width:11px;height:11px;border-radius:50%;background:var(--c1);margin-left:-4px;border:1.5px solid var(--soft)}
+.cb s:first-child{margin-left:0}
+.cb u{text-decoration:none;color:var(--muted)}
+.cb em{font-style:normal;color:var(--good)}
+.slots{display:flex;gap:6px;flex:none}
+.slot{width:34px;height:34px;border-radius:50%;border:2px dashed #C9C9D1;display:block}
+button.slot{padding:0;cursor:default}
+.slot.on{cursor:pointer;border:0;background:var(--c1);box-shadow:inset 0 -3px 0 rgba(0,0,0,.15)}
+.trk .tx{min-width:0;line-height:1.3}
+.trk b{display:block;font-family:var(--fd);font-size:.95rem}
+.trk span{color:var(--muted);font-size:.86rem}
+
+/* Saveurs */
+h2.t{font-size:1.4rem;font-weight:800;letter-spacing:-.02em;margin:28px 0 14px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media(min-width:720px){.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}}
+@media(min-width:1000px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.tile{background:color-mix(in srgb,var(--c1) 26%,#fff);border-radius:22px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0;border:2px solid transparent}
+.tile.has{border-color:var(--ink)}
+.tile .cookie{width:76px;height:76px}
+.tile h3{font-size:.95rem;font-weight:700;line-height:1.25;letter-spacing:-.01em}
+.tile .d{margin:0;font-size:.8rem;line-height:1.35;color:#4A4A52;flex:1}
+.tile .row{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:4px}
+.tile .p{font-weight:700;font-size:.9rem}
+.cookie{border-radius:50%;flex:none;background:
+radial-gradient(circle at 30% 34%,var(--c2) 0 11%,transparent 12%),radial-gradient(circle at 68% 28%,var(--c2) 0 9%,transparent 10%),
+radial-gradient(circle at 54% 66%,var(--c2) 0 12%,transparent 13%),radial-gradient(circle at 24% 72%,var(--c2) 0 8%,transparent 9%),
+radial-gradient(circle at 78% 70%,var(--c2) 0 8%,transparent 9%),var(--c1);box-shadow:inset 0 -5px 0 rgba(0,0,0,.14),0 6px 10px -4px rgba(0,0,0,.25)}
+.step{display:inline-flex;align-items:center;gap:2px;background:var(--ink);color:#fff;border-radius:999px;padding:3px}
+.step button{width:36px;height:36px;border-radius:50%;border:0;background:transparent;color:#fff;font-size:1.25rem;line-height:1;font-weight:600;display:grid;place-items:center}
+.step button:disabled{opacity:.35;cursor:default}
+.step output{min-width:22px;text-align:center;font-weight:700;font-variant-numeric:tabular-nums}
+.tile:not(.has) .minus,.tile:not(.has) output,.jar:not(.has) .minus,.jar:not(.has) output{display:none}
+
+.jar{background:var(--caramel);border-radius:22px;padding:18px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:center;margin-top:14px;border:2px solid transparent}
+.jar.has{border-color:var(--ink)}
+.jar h3{font-size:1.1rem;font-weight:800}.jar p{margin:4px 0 0;font-size:.9rem}.jar .p{font-weight:700}
+.rowx{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.rowx:last-of-type{border:0}
+.rowx .cookie{width:36px;height:36px}
+.rowx select{flex:1;min-width:0;border:2px solid transparent;background:var(--soft);border-radius:12px;padding:10px;font-size:16px}
+.rowx select:focus{border-color:var(--ink);outline:0}
+.rowx .rm{border:0;background:var(--soft);border-radius:999px;padding:10px 14px;font-weight:700;font-size:.85rem;flex:none}
+#boxov{z-index:60}
+.foot{text-align:center;color:var(--muted);font-size:.88rem;padding:32px 0 0}
+
+/* Barre */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--bg);border-top:1px solid var(--line);padding:12px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.bar .in{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.tot{font-family:var(--fd);font-weight:800;font-size:1.35rem;line-height:1.1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.sub{color:var(--muted);font-size:.84rem}
+.btn{border:0;background:var(--ink);color:#fff;font-weight:700;padding:14px 24px;min-height:50px;border-radius:999px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;text-align:center}
+.btn:disabled{opacity:.3;cursor:default}
+.btn.alt{background:var(--soft);color:var(--ink)}
+.bar .btn{flex:none}
+
+/* Fenêtre */
+.overlay{position:fixed;inset:0;z-index:50;background:rgba(20,20,25,.55);display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:var(--bg);width:100%;max-width:600px;max-height:100%;overflow-y:auto;border-radius:26px 26px 0 0;padding:20px max(18px,env(safe-area-inset-left,0px)) calc(24px + env(safe-area-inset-bottom,0px))}
+@media(min-width:680px){.overlay{align-items:center}.sheet{border-radius:26px;max-height:92%;padding-inline:28px}}
+@media(prefers-reduced-motion:no-preference){.sheet{animation:up .22s ease-out}@keyframes up{from{transform:translateY(28px);opacity:0}to{transform:none;opacity:1}}}
+.sheet header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.sheet h2{font-size:1.5rem;font-weight:800;letter-spacing:-.02em}
+.x{border:0;background:var(--soft);border-radius:50%;width:40px;height:40px}
+.recap{background:var(--soft);border-radius:18px;padding:6px 18px;margin-bottom:18px}
+.recap .l{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:.95rem}
+.recap .l:last-child{border:0}.recap .l span:last-child{white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--muted)}
+.recap .sum{font-weight:700}.recap .sum span:last-child{color:var(--ink)}
+.recap .gift span:last-child{color:var(--good);font-weight:700}
+.recap .total{font-family:var(--fd);font-weight:800;font-size:1.2rem}.recap .total span:last-child{color:var(--ink)}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+@media(max-width:520px){.form{grid-template-columns:1fr}}
+.f{display:grid;gap:6px;min-width:0}.f.full{grid-column:1/-1}
+.f label{font-size:.84rem;font-weight:700}
+.f input,.f textarea{width:100%;border:2px solid transparent;background:var(--soft);border-radius:14px;padding:13px 14px;font-size:16px;min-width:0}
+.f input:focus,.f textarea:focus{border-color:var(--ink);outline:0;background:#fff}
+.f textarea{resize:vertical;min-height:76px}.f.bad input{border-color:var(--danger)}.err{color:var(--danger);font-size:.82rem}
+.msg{width:100%;border:0;background:var(--soft);border-radius:14px;padding:12px 14px;font-size:.84rem;min-height:150px;resize:vertical;color:var(--muted)}
+.acts{display:grid;gap:10px;margin-top:14px}
+.note{color:var(--muted);font-size:.86rem;margin:10px 0 0}
+.status{min-height:1.4em;font-weight:700;color:var(--good);font-size:.92rem;margin-top:8px}.status.warn{color:var(--danger)}
+</style></head><body>
+<div class="wrap">
+  <div class="head">
+    <div class="brand" id="brand">Cookies faits maison</div>
+    <h1>Compose<br>ta box.</h1>
+    <p>3 € le cookie. Par 5, c'est 15 € et un pot de caramel beurre salé offert.</p>
+  </div>
+
+  <div class="trk" id="trk">
+    <div class="trow"><div class="slots" id="slots" aria-hidden="true"></div><div class="boxes" id="boxes"></div></div>
+    <div class="tx"><b id="trkT"></b><span id="trkS"></span></div>
+  </div>
+
+  <h2 class="t">13 saveurs</h2>
+  <div class="grid" id="grid"></div>
+
+  <h2 class="t">À tartiner</h2>
+  <div class="jar" id="jar">
+    <div><h3>Caramel beurre salé à la vanille</h3><p>Fait maison, en pot. Un pot offert par tranche de 5 cookies.</p><span class="p">4,50 € le pot</span></div>
+    <div class="step"><button type="button" class="minus" data-act="minus" data-id="caramel" aria-label="Retirer un pot de caramel">−</button><output id="q-caramel">0</output><button type="button" data-act="plus" data-id="caramel" aria-label="Ajouter un pot de caramel">+</button></div>
+  </div>
+  <div class="foot">100 % fait maison, livré chez vous</div>
+</div>
+
+<div class="bar"><div class="in">
+  <div><div class="tot" id="bartot">0 €</div><div class="sub" id="barhint">Aucun cookie choisi</div></div>
+  <button class="btn" id="go" type="button" disabled>Commander</button>
+</div></div>
+
+<div class="overlay" id="overlay" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sh">
+    <header><h2 id="sh">Ma commande</h2><button class="x" id="close" type="button" aria-label="Fermer">✕</button></header>
+    <div class="recap" id="recap"></div>
+    <div class="form">
+      <div class="f" data-f="name"><label for="in-name">Prénom</label><input id="in-name" autocomplete="given-name"><span class="err"></span></div>
+      <div class="f" data-f="phone"><label for="in-phone">Téléphone</label><input id="in-phone" type="tel" autocomplete="tel" inputmode="tel"><span class="err"></span></div>
+      <div class="f full" data-f="addr"><label for="in-addr">Adresse de livraison</label><input id="in-addr" autocomplete="street-address"><span class="err"></span></div>
+      <div class="f" data-f="date"><label for="in-date">Jour souhaité</label><input id="in-date" type="date"><span class="err"></span></div>
+      <div class="f" data-f="time"><label for="in-time">Heure souhaitée</label><input id="in-time" type="time"><span class="err"></span></div>
+      <div class="f full"><label for="in-note">Remarques (allergies, étage, code…)</label><textarea id="in-note"></textarea></div>
+    </div>
+    <label for="msg" style="font-size:.84rem;font-weight:700">Message de commande</label>
+    <textarea class="msg" id="msg" readonly></textarea>
+    <div class="acts">
+      <a class="btn" id="mail" hidden>Envoyer par e-mail</a>
+      <a class="btn" id="wa" target="_blank" rel="noopener" hidden>Envoyer par WhatsApp</a>
+      <button class="btn alt" id="copy" type="button">Copier la commande</button>
+    </div>
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+    <p class="note" id="waNote">Envoyez la commande par message. Elle est confirmée une fois reçue et validée.</p>
+  </div>
+</div>
+
+<div class="overlay" id="boxov" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="bxh">
+    <header><h2 id="bxh">Box</h2><button class="x" id="boxclose" type="button" aria-label="Fermer">✕</button></header>
+    <div id="boxrows"></div>
+    <div class="acts"><button class="btn" id="boxdone" type="button">Terminé</button></div>
+  </div>
+</div>
+
+<script>
+/* À personnaliser : adresse e-mail qui reçoit les commandes, et numéro WhatsApp (format 33612345678). Laisser vide pour masquer le bouton. */
+var EMAIL = "";
+var WHATSAPP = "";
+var BRAND = "Cookies faits maison";
+
+var FLAVORS = [
+  {id:"pistache",name:"Infiniment Pistache",desc:"Éclats de pistache & fondant praliné pistache",c1:"#A9B77A",c2:"#5E7A3A"},
+  {id:"macadamia",name:"Chocolat blanc & Noix de macadamia",desc:"",c1:"#D5B27A",c2:"#FBF1DC"},
+  {id:"citron",name:"Citron & Graines de pavot",desc:"Chocolat blanc, pavot & fondant citron",c1:"#F0DC8A",c2:"#3B3B4A"},
+  {id:"speculoos",name:"Spéculoos",desc:"Biscuit spéculoos & fondant spéculoos",c1:"#B5703A",c2:"#6E3A1A"},
+  {id:"trois",name:"Trois chocolats",desc:"",c1:"#5A3320",c2:"#F0E1C0"},
+  {id:"noisette-sel",name:"Noisette, Fleur de sel & Chocolat noir 70 %",desc:"",c1:"#7A4A2B",c2:"#2A140C"},
+  {id:"mangue",name:"Mangue, Coco & Citron vert",desc:"Chocolat blanc, coco & fondant mangue-citron vert",c1:"#F2B84B",c2:"#FFF4DC"},
+  {id:"caramel-sale",name:"Caramel au beurre salé",desc:"Chocolat noir, noix de pécan & fondant caramel beurre salé",c1:"#C98A3E",c2:"#3A1E10"},
+  {id:"praline",name:"Praliné vanille éclat d'Amande",desc:"Éclats d'amande, chocolat & fondant praliné vanille",c1:"#D9A86B",c2:"#F5E3C2"},
+  {id:"intense",name:"L'intense 70 %",desc:"Pépites de chocolat noir 70 %, cœur fondant au chocolat",c1:"#3A1F14",c2:"#7A4A2C"},
+  {id:"peanut",name:"Dark peanut",desc:"Chocolat noir, cacahuètes grillées, fleur de sel, cœur coulant cacahuète",c1:"#7B4B2A",c2:"#D9A25B"},
+  {id:"noisette",name:"La noisette",desc:"Amandes caramélisées et cœur crémeux à la noisette",c1:"#C99A62",c2:"#7A4A2B"},
+  {id:"cheesecake",name:"Façon Cheesecake",desc:"Chocolat blanc & fondant vanille",c1:"#E8D3A8",c2:"#FFFDF6"}
+];
+var PRICE=3,BOX=15,BOX_SIZE=5,JAR=4.5,MAX=30,KEY="commande-cookies-v1";
+var qty={},order=[],caramel=0,form={name:"",phone:"",addr:"",date:"",time:"",note:""};
+var $=function(s){return document.querySelector(s)};
+function euro(n){return (Math.round(n*100)%100===0?String(Math.round(n)):n.toFixed(2).replace(".",","))+" €"}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function plural(n,a,b){return n+" "+(n>1?b:a)}
+function syncQty(){qty={};order.forEach(function(id){qty[id]=(qty[id]||0)+1})}
+function fl(id){return FLAVORS.filter(function(f){return f.id===id})[0]}
+function load(){try{var d=JSON.parse(localStorage.getItem(KEY)||"null");if(!d)return;
+  if(Array.isArray(d.order))order=d.order.filter(fl);
+  else if(d.qty)FLAVORS.forEach(function(f){var v=Math.min(parseInt(d.qty[f.id],10)||0,MAX);for(var i=0;i<v;i++)order.push(f.id)});
+  caramel=Math.min(parseInt(d.caramel,10)||0,MAX);
+  if(d.form)Object.keys(form).forEach(function(k){if(typeof d.form[k]==="string")form[k]=d.form[k]})}catch(e){}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify({order:order,caramel:caramel,form:form}))}catch(e){}}
+function totals(){var n=0;FLAVORS.forEach(function(f){n+=qty[f.id]||0});
+  var b=Math.floor(n/BOX_SIZE);return{n:n,boxes:b,rest:n%BOX_SIZE,free:b,extra:caramel,total:n*PRICE+caramel*JAR}}
+function dateFr(v){if(!v)return"";var d=new Date(v+"T12:00:00");return isNaN(d)?v:d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})}
+
+function renderStatic(){
+  $("#brand").textContent=BRAND;
+  $("#grid").innerHTML=FLAVORS.map(function(f){return '<div class="tile" id="card-'+f.id+'" style="--c1:'+f.c1+';--c2:'+f.c2+'">'+
+    '<div class="cookie"></div><h3>'+esc(f.name)+'</h3><p class="d">'+esc(f.desc)+'</p>'+
+    '<div class="row"><span class="p">3 €</span><div class="step">'+
+    '<button type="button" class="minus" data-act="minus" data-id="'+f.id+'" aria-label="Retirer '+esc(f.name)+'">−</button>'+
+    '<output id="q-'+f.id+'">0</output>'+
+    '<button type="button" data-act="plus" data-id="'+f.id+'" aria-label="Ajouter '+esc(f.name)+'">+</button></div></div></div>'}).join("");
+  ["name","phone","addr","date","time","note"].forEach(function(k){$("#in-"+k).value=form[k]});
+  var t=new Date();$("#in-date").min=t.getFullYear()+"-"+String(t.getMonth()+1).padStart(2,"0")+"-"+String(t.getDate()).padStart(2,"0");
+}
+
+function renderTracker(t){
+  var list=order.map(fl);
+  var cur=list.slice(t.boxes*BOX_SIZE),h="",c="";
+  for(var i=0;i<BOX_SIZE;i++)h+=cur[i]?'<button type="button" class="slot on" data-box="'+t.boxes+'" aria-label="Modifier cette box" style="--c1:'+cur[i].c1+'"></button>':'<span class="slot"></span>';
+  $("#slots").innerHTML=h;
+  for(var j=0;j<t.boxes;j++){
+    c+='<button type="button" class="cb" data-box="'+j+'" aria-label="Modifier la box '+(j+1)+'"><em>✓</em>Box '+(j+1)+'<i>'+list.slice(j*BOX_SIZE,j*BOX_SIZE+BOX_SIZE).map(function(f){return '<s style="--c1:'+f.c1+'"></s>'}).join("")+'</i><u>✎</u></button>'}
+  $("#boxes").innerHTML=c;
+  if(t.n===0){$("#trkT").textContent="Box 1 : 0 sur 5";$("#trkS").textContent="Ajoute 5 cookies pour un pot de caramel offert";}
+  else if(t.rest===0){$("#trkT").textContent="Box "+(t.boxes+1)+" : 0 sur 5";$("#trkS").textContent=plural(t.free,"pot de caramel offert","pots de caramel offerts")+" · une nouvelle box commence";}
+  else{var need=BOX_SIZE-t.rest;$("#trkT").textContent="Box "+(t.boxes+1)+" : "+t.rest+" sur 5";$("#trkS").textContent="Encore "+plural(need,"cookie","cookies")+" pour un pot offert";}
+}
+
+function buildMessage(){
+  var t=totals(),o=["Bonjour, je souhaite passer commande chez "+BRAND+" :",""];
+  FLAVORS.forEach(function(f){if(qty[f.id])o.push("• "+qty[f.id]+" × "+f.name)});
+  if(t.n){var p=[];
+    if(t.boxes)p.push(plural(t.boxes,"box gourmande","box gourmandes")+" ("+(t.boxes*BOX_SIZE)+" cookies, "+euro(t.boxes*BOX)+")");
+    if(t.rest)p.push(plural(t.rest,"cookie","cookies")+" à l'unité ("+euro(t.rest*PRICE)+")");
+    o.push("→ "+p.join(" + "))}
+  if(t.free)o.push("• "+plural(t.free,"pot de caramel offert","pots de caramel offerts"));
+  if(t.extra)o.push("• "+t.extra+" × pot de caramel beurre salé vanille ("+euro(t.extra*JAR)+")");
+  o.push("","Total : "+euro(t.total),"","Prénom : "+(form.name.trim()||"…"),"Téléphone : "+(form.phone.trim()||"…"),"Livraison : "+(form.addr.trim()||"…"));
+  var w=[dateFr(form.date),form.time?"à "+form.time.replace(":","h"):""].filter(Boolean).join(" ");
+  o.push("Pour le : "+(w||"…"));
+  if(form.note.trim())o.push("Remarques : "+form.note.trim());
+  return o.join("\n");
+}
+
+function renderRecap(t){
+  var r=[];FLAVORS.forEach(function(f){if(qty[f.id])r.push('<div class="l"><span>'+qty[f.id]+' × '+esc(f.name)+'</span><span>'+euro(qty[f.id]*PRICE)+'</span></div>')});
+  if(t.n){var s=[];if(t.boxes)s.push(plural(t.boxes,"box gourmande","box gourmandes"));if(t.rest)s.push(t.rest+" à l'unité");
+    r.push('<div class="l sum"><span>'+s.join(" + ")+'</span><span>'+euro(t.n*PRICE)+'</span></div>')}
+  if(t.free)r.push('<div class="l gift"><span>Pot de caramel offert × '+t.free+'</span><span>offert</span></div>');
+  if(t.extra)r.push('<div class="l"><span>Pot de caramel × '+t.extra+'</span><span>'+euro(t.extra*JAR)+'</span></div>');
+  r.push('<div class="l total"><span>Total</span><span>'+euro(t.total)+'</span></div>');
+  $("#recap").innerHTML=r.join("");
+}
+
+function updateUI(){
+  syncQty();var t=totals();
+  FLAVORS.forEach(function(f){var q=qty[f.id]||0,c=$("#card-"+f.id);
+    $("#q-"+f.id).textContent=q;c.classList.toggle("has",q>0);
+    c.querySelector('[data-act="plus"]').disabled=q>=MAX});
+  $("#q-caramel").textContent=caramel;$("#jar").classList.toggle("has",caramel>0);
+  document.querySelector('#jar [data-act="plus"]').disabled=caramel>=MAX;
+  var count=t.n+caramel;
+  $("#bartot").textContent=euro(t.total);
+  $("#barhint").textContent=count===0?"Aucun cookie choisi":plural(t.n,"cookie","cookies")+(caramel?" + "+plural(caramel,"pot","pots"):"");
+  $("#go").disabled=count===0;
+  renderTracker(t);renderRecap(t);
+  var msg=buildMessage();$("#msg").value=msg;
+  if(EMAIL){$("#mail").hidden=false;
+    $("#mail").href="mailto:"+EMAIL+"?subject="+encodeURIComponent("Commande cookies"+(form.name.trim()?" - "+form.name.trim():""))+"&body="+encodeURIComponent(msg.replace(/\n/g,"\r\n"))}
+  if(WHATSAPP){$("#wa").hidden=false;$("#wa").href="https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(msg)}
+  save();
+}
+
+document.addEventListener("click",function(e){
+  var b=e.target.closest("[data-act]");if(!b)return;
+  var id=b.getAttribute("data-id"),d=b.getAttribute("data-act")==="plus"?1:-1;
+  if(id==="caramel")caramel=Math.max(0,Math.min(MAX,caramel+d));else if(d>0){if((qty[id]||0)<MAX)order.push(id)}else{var ix=order.lastIndexOf(id);if(ix>-1)order.splice(ix,1)}
+  updateUI();
+});
+
+var curBox=-1;
+function renderBox(){
+  var items=order.slice(curBox*BOX_SIZE,curBox*BOX_SIZE+BOX_SIZE);
+  if(!items.length){closeBox();return}
+  $("#bxh").textContent="Box "+(curBox+1)+" : "+items.length+" sur 5";
+  $("#boxrows").innerHTML=items.map(function(id,i){var f=fl(id),ix=curBox*BOX_SIZE+i;
+    return '<div class="rowx"><div class="cookie" style="--c1:'+f.c1+';--c2:'+f.c2+'"></div>'+
+    '<select data-ix="'+ix+'" aria-label="Saveur du cookie '+(i+1)+'">'+FLAVORS.map(function(g){return '<option value="'+g.id+'"'+(g.id===id?' selected':'')+'>'+esc(g.name)+'</option>'}).join("")+'</select>'+
+    '<button type="button" class="rm" data-rm="'+ix+'">Retirer</button></div>'}).join("");
+}
+function openBox(j){curBox=j;lastFocus=document.activeElement;$("#boxov").hidden=false;document.body.style.overflow="hidden";renderBox();$("#boxclose").focus()}
+function closeBox(){$("#boxov").hidden=true;curBox=-1;document.body.style.overflow=$("#overlay").hidden?"":"hidden";if(lastFocus&&lastFocus.focus)lastFocus.focus()}
+document.addEventListener("click",function(e){
+  var b=e.target.closest("[data-box]");if(b){openBox(parseInt(b.getAttribute("data-box"),10));return}
+  var r=e.target.closest("[data-rm]");if(r){order.splice(parseInt(r.getAttribute("data-rm"),10),1);updateUI();renderBox()}
+});
+$("#boxrows").addEventListener("change",function(e){var ix=e.target.getAttribute("data-ix");if(ix===null)return;order[parseInt(ix,10)]=e.target.value;updateUI();renderBox()});
+$("#boxclose").addEventListener("click",closeBox);$("#boxdone").addEventListener("click",closeBox);
+$("#boxov").addEventListener("click",function(e){if(e.target===$("#boxov"))closeBox()});
+
+var lastFocus=null;
+function openSheet(){if(totals().n+caramel===0)return;lastFocus=document.activeElement;$("#overlay").hidden=false;document.body.style.overflow="hidden";$("#status").textContent="";$("#status").className="status";$("#close").focus()}
+function closeSheet(){$("#overlay").hidden=true;document.body.style.overflow="";if(lastFocus&&lastFocus.focus)lastFocus.focus()}
+$("#go").addEventListener("click",openSheet);
+$("#close").addEventListener("click",closeSheet);
+$("#overlay").addEventListener("click",function(e){if(e.target===$("#overlay"))closeSheet()});
+document.addEventListener("keydown",function(e){if(e.key!=="Escape")return;if(!$("#boxov").hidden)closeBox();else if(!$("#overlay").hidden)closeSheet()});
+
+["name","phone","addr","date","time","note"].forEach(function(k){
+  $("#in-"+k).addEventListener("input",function(e){form[k]=e.target.value;
+    var w=e.target.closest(".f");if(w&&w.classList.contains("bad")&&e.target.value.trim()){w.classList.remove("bad");w.querySelector(".err").textContent=""}
+    updateUI()})});
+
+var LABELS={name:"Indiquez votre prénom.",phone:"Indiquez un numéro de téléphone.",addr:"Indiquez l'adresse de livraison.",date:"Choisissez un jour.",time:"Choisissez une heure."};
+function validate(){var first=null;
+  Object.keys(LABELS).forEach(function(k){var w=document.querySelector('.f[data-f="'+k+'"]'),bad=!String(form[k]).trim();
+    w.classList.toggle("bad",bad);w.querySelector(".err").textContent=bad?LABELS[k]:"";if(bad&&!first)first=$("#in-"+k)});
+  if(first){first.focus();$("#status").textContent="Complétez les champs en rouge pour envoyer la commande.";$("#status").className="status warn";return false}
+  return true}
+$("#copy").addEventListener("click",function(){
+  if(!validate())return;var msg=buildMessage();
+  var fb=function(){var m=$("#msg");m.removeAttribute("readonly");m.focus();m.select();$("#status").textContent="Sélectionnez le texte et copiez-le, puis envoyez-le par message.";$("#status").className="status";m.setAttribute("readonly","")};
+  try{navigator.clipboard.writeText(msg).then(function(){$("#status").textContent="Commande copiée. Collez-la dans votre message pour l'envoyer.";$("#status").className="status"},fb)}catch(e){fb()}});
+$("#mail").addEventListener("click",function(e){if(!validate()){e.preventDefault();return}
+  $("#status").textContent="Votre application mail s'ouvre avec la commande. Appuyez sur envoyer pour la transmettre.";$("#status").className="status"});
+$("#wa").addEventListener("click",function(e){if(!validate()){e.preventDefault();return}
+  $("#status").textContent="WhatsApp s'ouvre avec votre commande. Appuyez sur envoyer pour la transmettre.";$("#status").className="status"});
+
+load();renderStatic();updateUI();
+</script></body></html>
